@@ -1,20 +1,19 @@
-# Frontend Indicação Amigo
-Aplicação frontend em ReacJs
+# Getting Started with Create React App
 
-A aplicação,irá fazer uso da API criada, no repositorio johnatanivini/api-inidicacao-amigo
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# Tecnologias
+## Available Scripts
 
-- ReacJs 17+
-- Axios
-- Styled Components
-- Material-UI
+In the project directory, you can run:
 
-## A aplicação é divida em duas partes
+### `npm start`
 
-1 - A Tela inicial, para pedido de indicação, com seu respectivo formulario
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
 
 ![image](https://user-images.githubusercontent.com/2191326/125199704-d4712780-e23d-11eb-88e4-c5aa04784a5f.png)
 
 
 2 - Uma área administrativa para o usuário que gerencia as indicações, e analisa-as, podendo atualizar o status, ou exluir as mesmas.
+
