@@ -4,7 +4,8 @@ const config = {
     },
     headers:{
         'Accept' : 'application/json'
-    }
+    },
+    token: '1|NuE2nS8wDQW1rxLSythoMgrx4ChTrdqtOUALJPWK'
 }
 
 export default config

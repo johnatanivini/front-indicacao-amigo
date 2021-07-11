@@ -1,14 +1,13 @@
-import { Button, Card, CardContent, Container, Divider, Grid, LinearProgress, makeStyles, TextField, Typography } from '@material-ui/core'
+import { Button, CardContent, Divider, LinearProgress, makeStyles, Paper, TextField, Typography } from '@material-ui/core'
 import { Alert } from '@material-ui/lab';
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Router } from 'react-router-dom';
 import config from '../config/config';
 
 const useStyles = makeStyles({
     card:{
-        display:'flex',
-        justifyContent:'center'
+       margin:'20px',
+       marginTop:'5rem'
     },
     button:{
         marginTop:'1em'
@@ -73,14 +72,9 @@ function Home() {
     }
 
     return (
-        <Grid container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: '100vh' }}>
-            <Grid item xs={12} lg={6} md={6}>
-            <Card md={12} width={2/4}>
+       
+           
+            <Paper xs={12} md={8} sm={12} lg={8} className={classes.card}>
                 {loading && <LinearProgress color="secondary"/>}
                 <CardContent>
                     <Typography variant="h6" gutterBottom>
@@ -98,22 +92,33 @@ function Home() {
                         </Alert>
                     }
                     <form className='form-indicacao'  autoComplete="off" onSubmit={handleSubmit}>
-                        <TextField required id="nome" minLength="5" value={nome} label="Nome" maxLength="120" onInput={e => setNome(e.target.value)} />
+                        <TextField
+                        style ={{width: '100%'}}
+                        
+                        required id="nome" minLength="5" value={nome} label="Nome" maxLength="120" onInput={e => setNome(e.target.value)} />
                         <Divider />
-                        <TextField required id="cpf" label="CPF" placeholder="999.999.999-99" max="14" min="14" value={cpf} onInput={e => setCpf(e.target.value)} />
+                        <TextField 
+                         style ={{width: '100%'}}
+                        
+                        required id="cpf" label="CPF" placeholder="999.999.999-99" max="14" min="14" value={cpf} onInput={e => setCpf(e.target.value)} />
                         <Divider />
-                        <TextField required id="email" type="email" minLength="10" maxLength="120" label="Email" value={email} onInput={e => setEmail(e.target.value)} />
+                        <TextField 
+                         style ={{width: '100%'}}
+                         
+                        required id="email" type="email" minLength="10" maxLength="120" label="Email" value={email} onInput={e => setEmail(e.target.value)} />
                         <Divider />
-                        <TextField  id="telefone" maxLength="16" min="15" placeholder="(99) 9 9999-9999" label="Telefone" value={telefone}  onInput={e => setTelefone(e.target.value)}/>
+                        <TextField 
+                         style ={{width: '100%'}}
+                        
+                        id="telefone" maxLength="16" min="15" placeholder="(99) 9 9999-9999" label="Telefone" value={telefone}  onInput={e => setTelefone(e.target.value)}/>
                         <Divider />
                         <Button type="submit" color="secondary" variant="contained" className={classes.button}>
                             Indicar
                         </Button>
+                       
                     </form>
                 </CardContent>
-            </Card>
-            </Grid>
-        </Grid>
+            </Paper>
     );
 }
 
