@@ -1,0 +1,14 @@
+version: '3.2'
+services: 
+    app:
+        container_name: front_indicacao_amigo
+        build: .
+        ports: 
+            - 3000:3000
+        volumes: 
+            - ./:/usr/src/app
+        command: 
+            - npm install
+            - npm start
+    
+    

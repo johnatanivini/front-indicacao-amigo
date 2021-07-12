@@ -63,7 +63,6 @@ function Indicacoes () {
                 default:
                     setMsg(response.data.message)
                     break
-                    break
             }
            
         }).catch(error => {
