@@ -1,8 +1,11 @@
 import { Fab, LinearProgress, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core'
 import { CheckCircle, Delete } from '@material-ui/icons'
+import { Alert } from '@material-ui/lab'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import config from '../config/config'
+
+
 
 const useStyles = makeStyles({
     card:{
@@ -18,27 +21,83 @@ function Indicacoes () {
 
     const classes = useStyles()
     const [indicacoes, setIndicacoes]= useState([])
-    const [token] = useState(config.token)
     const [loading, setLoading] = useState(true)
+    const [msg, setMsg] = useState(false);
 
-    useEffect(function(){
+    const base_url = config.api.base_url
+    const token = config.token
 
-        axios.get(`${config.api.base_url}/indicacoes`,{
-            headers: {
-                'Accept':'application/json',
-                'Authorization' : `Bearer `+ token
-            }
-        }).then(response => {
+
+    axios.interceptors.request.use(
+        config => {
+            config.headers.Authorization = `Bearer ${token}`
+            config.headers.Accept = 'application/json'
+            return config
+        },
+        error => {
+            return Promise.reject(error)
+        }
+    )
+
+    function remove(id)
+    {
+        setLoading(true)
+        axios.delete(`${base_url}/indicacoes/${id}`).then(response => {
             setLoading(false)
-            const {data} = response.data
-            setIndicacoes(data)
+            getIndicacoes()
+        }).catch(error => {
+            setMsg(error.message)
         })
+    }
 
+     function updateStatus(id)
+    {
+       setLoading(true)
+       axios.put(`${base_url}/indicacoes/${id}`).then(response => {
+            setLoading(false)
+            switch(response.status){
+                case 201:
+                case 200:
+                    getIndicacoes()
+                    break                    
+                default:
+                    setMsg(response.data.message)
+                    break
+                    break
+            }
+           
+        }).catch(error => {
+            setMsg(error.message)
+        })
+    }
+
+    const getIndicacoes = () => { 
+
+        setLoading(true)
+         axios.get(`${base_url}/indicacoes`).then(response => {
+              setLoading(false)
+              const {data} = response.data
+
+              data.sort((a,b) => {
+                  return a.id - b.id || a.pessoa.nome.localCompare(b.pessoa.nome) 
+              })
+
+              setIndicacoes(data)
+          }).catch(error => {
+            setMsg(error.message)
+        })
+      }
+
+    useEffect(()=>{
+
+        getIndicacoes();
+         
     },[])
 
     return (
         <Paper className={classes.card}>
             {loading && <LinearProgress color="secondary"/>}
+            {msg && <Alert severity="info">{msg}</Alert>}
             <TableContainer>
                 <Table aria-label="simple table">
                     <TableHead>
@@ -61,7 +120,7 @@ function Indicacoes () {
                                     severity = 'info'
                                     break
                                 case 'EM ANDAMENTO':
-                                    severity = 'warning'
+                                    severity = 'secondary'
                                     break
                                 case 'FINALIZADA':
                                     severity = 'primary'
@@ -98,11 +157,11 @@ function Indicacoes () {
                                 </TableCell>
                                 <TableCell align="right">
                                    
-                                    <Fab color="primary" aria-label="add">
+                                    <Fab color="primary" aria-label="add" onClick={() => updateStatus(row.id)}>
                                         <CheckCircle />
                                     </Fab>
                                     
-                                    <Fab color="secondary" aria-label="remove">
+                                    <Fab color="secondary" aria-label="remove" onClick={() => remove(row.id)}>
                                         <Delete/>
                                     </Fab>
                                    
