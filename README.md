@@ -33,7 +33,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
   - Material Table
   - Material Icons
   - Axios
-# NodeJs v16+
+# Node v16
+# Docker
+  In use:
+  - Dockerfile
+  - docker-compose
 
-
+Execute command, and mount the image node version 16 and dependencies. 
+### `docker-compose up -d --build`
 

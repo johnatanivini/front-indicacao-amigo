@@ -1,17 +1,16 @@
 FROM node:16
 
-RUN npm install -g npm@7.19.1
-RUN npm install -g pm2
+WORKDIR /app
 
-WORKDIR /usr/src/app
+ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --silence
 
 COPY . ./
 
-EXPOSE 3000
+CMD ["npm","start"]
 
-CMD ["pm2","--name HelloWorld start npm -- start"]
+EXPOSE 3000
 
